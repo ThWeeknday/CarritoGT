@@ -11,7 +11,6 @@ import java.util.Map;
 
 @Path("/api/carrito")
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class ShoppingCartController {
 
     @Inject
@@ -49,10 +48,10 @@ public class ShoppingCartController {
     public Response eliminarDelCarrito(@PathParam("idShoppingCart") Integer idShoppingCart) {
         boolean eliminado = shoppingCartService.eliminarProducto(idShoppingCart);
         if (eliminado) {
-            return Response.ok(Map.of("mensaje", "Item eliminado del carrito")).build();
+            return Response.ok(Map.of("mensaje", "Producto eliminado del carrito")).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity(Map.of("error", "No se encontró el item en el carrito"))
+                    .entity(Map.of("error", "No se encontró el registro en el carrito"))
                     .build();
         }
     }

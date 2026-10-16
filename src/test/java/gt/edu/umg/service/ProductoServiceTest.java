@@ -1,40 +1,35 @@
-package gt.edu.umg;
+package gt.edu.umg.service;
 
 import gt.edu.umg.entity.Producto;
-import gt.edu.umg.entity.ShoppingCart;
-import org.junit.Assert;
-import org.junit.Test;
+import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import java.util.List;
 
+@QuarkusTest
 public class ProductoServiceTest {
 
-    @Test
-    public void testCrearProductoYGetters() {
-        Producto p = new Producto();
-        p.setIdProducto(1);
-        p.setNombre("FinePix Pro2 3D Camera");
-        p.setCodigo("3DcAM01");
-        p.setImagen("images/product/camera.jpg");
-        p.setPrecio(671.21);
+    @Inject
+    ProductoService productoService;
 
-        Assert.assertEquals(Integer.valueOf(1), p.getIdProducto());
-        Assert.assertEquals("3DcAM01", p.getCodigo());
-        Assert.assertEquals(Double.valueOf(671.21), p.getPrecio());
+    @Test
+    public void testListarProductos() {
+        List<Producto> productos = productoService.listarProductos();
+        Assertions.assertNotNull(productos);
+        Assertions.assertFalse(productos.isEmpty());
     }
 
     @Test
-    public void testAsignarProductoAShoppingCart() {
-        Producto p = new Producto();
-        p.setIdProducto(4);
-        p.setNombre("XP 1155 Intel Core Laptop");
+    public void testBuscarProductoPorIdExistente() {
+        Producto producto = productoService.buscarPorId(1);
+        Assertions.assertNotNull(producto);
+        Assertions.assertEquals("3DcAM01", producto.getCodigo());
+    }
 
-        ShoppingCart item = new ShoppingCart();
-        item.setIdShoppingCart(10);
-        item.setProducto(p);
-        item.setCantidad(2);
-        item.setCodUsuario("henry01");
-
-        Assert.assertNotNull(item.getProducto());
-        Assert.assertEquals("XP 1155 Intel Core Laptop", item.getProducto().getNombre());
-        Assert.assertEquals(Integer.valueOf(2), item.getCantidad());
+    @Test
+    public void testBuscarProductoPorIdInexistente() {
+        Producto producto = productoService.buscarPorId(999);
+        Assertions.assertNull(producto);
     }
 }
