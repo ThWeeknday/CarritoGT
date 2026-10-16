@@ -1,78 +1,21 @@
-# carritogt-api
+# CarritoGT API — Backend REST con Java y Quarkus
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+API REST monolítica desarrollada bajo una arquitectura por capas para la gestión del catálogo de productos y carrito de compras, conectada al esquema relacional `cc` en MySQL.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## Stack Tecnológico
+* **Entorno Virtualizado:** Ubuntu 26.04 LTS sobre VMware Fusion
+* **Lenguaje y Framework:** Java 25 + Quarkus 3.40.1 (`quarkus-rest-jackson`, `quarkus-hibernate-orm-panache`)
+* **Base de Datos:** MySQL Community Server 8.4.11 (`quarkus-jdbc-mysql`)
+* **Herramientas y Pruebas:** Maven, Lombok, JUnit y RestAssured (`@QuarkusTest`)
 
-## Running the application in dev mode
+## Arquitectura por Capas (`gt.edu.umg`)
+* **`entity`**: Mapeo JPA de las tablas `producto` (`Producto.java`) y `shopping_cart` (`ShoppingCart.java`).
+* **`repository`**: Acceso a datos mediante `PanacheRepositoryBase` (`ProductoRepository`, `ShoppingCartRepository`).
+* **`service`**: Lógica de negocio, validaciones y control transaccional (`ProductoService`, `ShoppingCartService`).
+* **`controller`**: Exposición de endpoints REST en formato JSON (`ProductoController`, `ShoppingCartController`).
 
-You can run your application in dev mode that enables live coding using:
+## Configuración e Inicio Rápido
 
-```shell script
-./mvnw quarkus:dev
-```
-
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
-
-## Packaging and running the application
-
-The application can be packaged using:
-
-```shell script
-./mvnw package
-```
-
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
-
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/carritogt-api-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplified JPA/Hibernate data access layer with active record and repository patterns
-- JDBC Driver - MySQL ([guide](https://quarkus.io/guides/datasource)): Connect to the MySQL database via JDBC
-
-## Provided Code
-
-### Hibernate ORM
-
-Create your first JPA entity
-
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
-
-
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
-
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+1. **Importar el esquema de base de datos en MySQL:**
+   ```bash
+   mysql -u henrymndz -p < script/cc.sql
