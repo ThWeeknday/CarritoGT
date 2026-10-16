@@ -1,9 +1,15 @@
 package gt.edu.umg.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name = "shopping_cart")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ShoppingCart {
 
     @Id
@@ -20,18 +26,4 @@ public class ShoppingCart {
 
     @Column(name = "cantidad")
     private Integer cantidad;
-
-    public ShoppingCart() {}
-
-    public Integer getIdShoppingCart() { return idShoppingCart; }
-    public void setIdShoppingCart(Integer idShoppingCart) { this.idShoppingCart = idShoppingCart; }
-
-    public Producto getProducto() { return producto; }
-    public void setProducto(Producto producto) { this.producto = producto; }
-
-    public String getCodUsuario() { return codUsuario; }
-    public void setCodUsuario(String codUsuario) { this.codUsuario = codUsuario; }
-
-    public Integer getCantidad() { return cantidad; }
-    public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
 }
